@@ -29,6 +29,11 @@ const authenticate = async (
 
         next();
     } catch (error) {
+        if (error instanceof AuthenticationError) {
+            next(error);
+            return;
+        }
+
         next(
             new AuthenticationError(
                 "Unauthorized: Invalid token",
